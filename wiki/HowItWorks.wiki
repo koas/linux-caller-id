@@ -15,7 +15,7 @@ The configuration tab allows you to set up the modem connection options.
 
 [http://s8.postimage.org/9e6fwyj9h/recent2.png]
 
-The port field may vary from my computer (/dev/ttyACM0) from yours. This is how I found it in my Ubuntu box:
+The port field may vary from my computer (/dev/ttyACM0) to yours. This is how I found it in my Ubuntu box:
 
 cd /dev/serial
 ls -l by-id
