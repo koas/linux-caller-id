@@ -9,4 +9,33 @@ The program puts an icon in the system tray, you can click this icon to show or 
 When the modem detects an incoming call, a notification will appear showing the calling number. If the number is in the database, the description will also be shown. If the number is marked as _blocked_, the modem will answer and then hang up. If the number is not in the database or marked as _not blocked_ the program lets it ring.
 
 
-= Details =
+= Configuration =
+
+The configuration tab allows you to set up the modem connection options.
+
+[http://s8.postimage.org/9e6fwyj9h/recent2.png]
+
+The port field may vary from my computer (/dev/ttyACM0) from yours. This is how I found it in my Ubuntu box:
+
+`cd /dev/serial
+ls -l by-id`
+
+This outputs 
+
+lrwxrwxrwx 1 root root 13 2012-09-07 18:02 usb-Conexant_USB_Modem_24680246-if00 -> ../../ttyACM0
+
+Once you found the port, the other parameters (baud rate, data bits, parity, stop bits and flow control) are pretty much standard I think.
+
+- Activate Caller Id Command: I found this command in a reference manual from Conexant. If your modem uses another chip you'll have to look for the reference manual for this code, and be sure you set it to the value for formatted data. Please send it to me so I can add it to this wiki.
+
+- Caller Id Variable and Separator: when the modem detects an incoming call it sends the caller Id to the program. In my modem it uses this format:
+
+NMBR = XXXXXXXXX
+
+Hence the variable is NMBR and the separator is =. This may change from modem to modem.
+
+- Answer command: this is the command sent to the modem to answer the call. Again, it may be different for your modem.
+
+- Hang up command: this is the command sent to hang up the call. The reference for my modem indicates the command is ATH0, but I noticed that just sending the first A hangs the call (another part of the reference indicates that sending any data to the modem will abort the last operation, so that's maybe the reason).
+
+Again, if you have a different modem and manage to make the program work send me the details so I can add them here and save time for future users.
