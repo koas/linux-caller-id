@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/res">
+        <file>resources/add.png</file>
+        <file>resources/delete.png</file>
+        <file>resources/done.png</file>
+        <file>resources/edit.png</file>
+        <file>resources/icon.png</file>
+        <file>resources/config.png</file>
+        <file>resources/db.png</file>
+        <file>resources/recent.png</file>
+        <file>resources/log.png</file>
+        <file>resources/cancel.png</file>
+        <file>resources/about.png</file>
+    </qresource>
+</RCC>
