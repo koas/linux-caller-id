@@ -1,0 +1,12 @@
+#summary A brief guide to the program
+
+= Introduction =
+
+When you launch the program for the first time it will pop up the config window, where you can set the values for the modem connection and commands. Once you've filled this info press the _Save and run_ button to save the config and connect to the modem.
+
+The program puts an icon in the system tray, you can click this icon to show or hide the config window. Once the config is saved the next time the program runs will not show the config window, and sit quietly in the tray.
+
+When the modem detects an incoming call, a notification will appear showing the calling number. If the number is in the database, the description will also be shown. If the number is marked as _blocked_, the modem will answer and then hang up. If the number is not in the database or marked as _not blocked_ the program lets it ring.
+
+
+= Details =
