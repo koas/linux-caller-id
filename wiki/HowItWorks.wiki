@@ -15,14 +15,36 @@ The configuration tab allows you to set up the modem connection options.
 
 [http://s8.postimage.org/9e6fwyj9h/recent2.png]
 
-The port field may vary from my computer (/dev/ttyACM0) to yours. This is how I found it in my Ubuntu box:
+The port field may vary from my computer (/dev/ttyACM0) to yours. To find the port, first look for the name of the device. If it's a PCI modem, run command *lspci*, if it's USB run *lsusb*. My modem is USB, so I ran lsusb and here is the output:
 
-cd /dev/serial
-ls -l by-id
+{{{
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 001 Device 010: ID 05e3:0608 Genesys Logic, Inc. USB-2.0 4-Port HUB
+Bus 001 Device 004: ID 2040:5500 Hauppauge Windham
+Bus 001 Device 005: ID 058f:6362 Alcor Micro Corp. Flash Card Reader/Writer
+Bus 002 Device 002: ID 1e7d:2ced ROCCAT Kone Mouse
+Bus 001 Device 011: ID 05e3:0608 Genesys Logic, Inc. USB-2.0 4-Port HUB
+Bus 001 Device 012: ID 18ec:3299 Arkmicro Technologies Inc. 
+Bus 001 Device 013: ID 0572:1329 Conexant Systems (Rockwell), Inc. 
+Bus 001 Device 009: ID 0fce:0171 Sony Ericsson Mobile Communications AB
+}}}
 
-This outputs 
+The modem device is the Conexant Systems one, so I just ran a simple find command to look for it in the /dev folder
 
-lrwxrwxrwx 1 root root 13 2012-09-07 18:02 usb-Conexant_USB_Modem_24680246-if00 -> ../../ttyACM0
+{{{
+koas@home:/$ find /dev -name '*Conexant*'
+/dev/serial/by-id/usb-Conexant_USB_Modem_24680246-if00
+}}}
+
+Once you get the file, just do a ls -l to find where it points to:
+
+{{{
+koas@home:/$ ls -l /dev/serial/by-id/usb-Conexant_USB_Modem_24680246-if00 
+lrwxrwxrwx 1 root root 13 2012-09-19 10:12 /dev/serial/by-id/usb-Conexant_USB_Modem_24680246-if00 -> ../../ttyACM0
+}}}
+
+So now I know that my port is /dev/ttyACM0.
 
 Once you found the port, the other parameters (baud rate, data bits, parity, stop bits and flow control) are pretty much standard I think.
 
