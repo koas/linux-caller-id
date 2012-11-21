@@ -48,6 +48,14 @@ So now I know that my port is /dev/ttyACM0.
 
 Once you found the port, the other parameters (baud rate, data bits, parity, stop bits and flow control) are pretty much standard I think.
 
+If after doing this you still get the message "Could not open modem, please check config" maybe you don't have permissions to open the port. This can be fixed by typing in your command line
+
+{{{
+sudo chmod 666 /dev/ttyACM0
+}}}
+
+Remember to change ttyACM0 to the port of your modem.
+
 - Activate Caller Id Command: I found this command in a reference manual from Conexant. If your modem uses another chip you'll have to look for the reference manual for this code, and be sure you set it to the value for formatted data. Please send it to me so I can add it to this wiki.
 
 - Caller Id Variable and Separator: when the modem detects an incoming call it sends the caller Id to the program. In my modem it uses this format:
