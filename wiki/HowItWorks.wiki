@@ -48,13 +48,19 @@ So now I know that my port is /dev/ttyACM0.
 
 Once you found the port, the other parameters (baud rate, data bits, parity, stop bits and flow control) are pretty much standard I think.
 
-If after doing this you still get the message "Could not open modem, please check config" maybe you don't have permissions to open the port. This can be fixed by typing in your command line
+If after doing this you still get the message "Could not open modem, please check config" maybe you don't have permissions to open the port. This can be fixed by adding your user to the group of the device. In my box, for example, /dev/ttyACM0 has the user root and the group dialout:
 
 {{{
-sudo chmod 666 /dev/ttyACM0
+crw-rw----  1 root dialout   166,   0 ene 15 16:53 ttyACM0
 }}}
 
-Remember to change ttyACM0 to the port of your modem.
+so I add my user (koas) to that group by typing:
+
+{{{
+sudo usermod -a -G dialout koas
+}}}
+
+and by logging out and in again the problem is solved. Always remember to change ttyACM0 to the port of your modem.
 
 - Activate Caller Id Command: I found this command in a reference manual from Conexant. If your modem uses another chip you'll have to look for the reference manual for this code, and be sure you set it to the value for formatted data. Please send it to me so I can add it to this wiki.
 
