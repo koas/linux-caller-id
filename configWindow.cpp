@@ -92,7 +92,7 @@ configWindow::configWindow(QWidget *parent) :
             this,               SLOT(slNumberDelete()));
 
     // Set up recent calls table widget
-    headers.clear();;
+    headers.clear();
     headers << tr("Date") << tr("Number") << tr("Description");
     ui->twRecent->setHorizontalHeaderLabels(headers);
 
@@ -115,7 +115,8 @@ configWindow::configWindow(QWidget *parent) :
         this->startMonitoring();
 
         // Hide main window
-        QMetaObject::invokeMethod(this, "hide", Qt::QueuedConnection);
+        // Now commented since some Linux desktops have problem showing the tray icon (v1.1)
+        //QMetaObject::invokeMethod(this, "hide", Qt::QueuedConnection);
     }
     else ui->tabWidget->setCurrentIndex(2);
 }
@@ -346,7 +347,7 @@ void configWindow::startMonitoring()
     if (!this->callerIdCommand.isEmpty())
     {
         QString command = this->callerIdCommand + "\r";
-        if (this->modem->write(command.toAscii(), command.length()) == -1)
+        if (this->modem->write(command.toLatin1(), command.length()) == -1)
         {
             QMessageBox::warning(this, tr("Error sending data"),
                                  tr("Error sending data, please check config"));
@@ -453,15 +454,27 @@ void configWindow::processIncomingCall(const QString &number)
     if (blocked)
     {
         QString answer = this->answerCommand + "\r";
-        this->modem->write(answer.toAscii(), answer.length());
+        this->modem->write(answer.toLatin1(), answer.length());
         QTimer::singleShot(2000, this, SLOT(slHangup()));
+    }
+
+    // Add call to calls log
+    QFile callsFile(this->userFolder + CALLS_FILE);
+    if (callsFile.open(QIODevice::Append))
+    {
+        QString data(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+        data += " " + number + " " + description + "\n";
+
+        QTextStream out(&callsFile);
+        out << data;
+        callsFile.close();
     }
 }
 
 void configWindow::slHangup()
 {
     QString hangup = this->hangupCommand + "\r";
-    this->modem->write(hangup.toAscii(), hangup.length());
+    this->modem->write(hangup.toLatin1(), hangup.length());
 }
 
 void configWindow::updateNumbersTable()
