@@ -16,6 +16,7 @@
 
 #define CONFIG_FILE "config"
 #define DB_FILE "db"
+#define CALLS_FILE "calls"
 
 namespace Ui {
     class configWindow;
